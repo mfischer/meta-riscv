@@ -35,12 +35,20 @@ do_install_append_freedom-u540() {
                ${WORKDIR}/build/bbl ${WORKDIR}/build/bbl.bin
 }
 
+do_install_append_freedom-u540-sd() {
+        ${OBJCOPY} -S -O binary --change-addresses -0x80000000 \
+               ${WORKDIR}/build/bbl ${WORKDIR}/build/bbl.bin
+}
+
 do_deploy () {
         install -d ${DEPLOY_DIR_IMAGE}
         install -m 755 ${WORKDIR}/build/bbl ${DEPLOY_DIR_IMAGE}/bbl
 }
 
 do_deploy_append_freedom-u540() {
+        install -m 755 ${WORKDIR}/build/bbl.bin ${DEPLOY_DIR_IMAGE}/bbl.bin
+}
+do_deploy_append_freedom-u540-sd() {
         install -m 755 ${WORKDIR}/build/bbl.bin ${DEPLOY_DIR_IMAGE}/bbl.bin
 }
 addtask deploy before do_build after do_install

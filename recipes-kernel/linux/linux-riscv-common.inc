@@ -14,6 +14,10 @@ SRC_URI = "\
 # qemu uses in-tree defconfig
 # freedom-u540 uses out-of-tree defconfig
 SRC_URI_append_freedom-u540 = " file://defconfig"
+SRC_URI_append_freedom-u540-sd = " \
+                                   file://defconfig \
+                                   file://0001-risc-v-Fix-issue-ignoring-CONFIG_CMDLINE_OVERRIDE.patch \
+                                 "
 
 LINUX_VERSION_EXTENSION = "-riscv"
 
@@ -27,6 +31,6 @@ KCONFIG_MODE="--alldefconfig"
 KERNEL_CC_append = " ${TOOLCHAIN_OPTIONS} ${SECURITY_NOPIE_CFLAGS}"
 KERNEL_LD_append = " -no-pie"
 
-COMPATIBLE_MACHINE = "(qemuriscv64|freedom-u540)"
+COMPATIBLE_MACHINE = "(qemuriscv64|freedom-u540|freedom-u540-sd)"
 
 KERNEL_FEATURES_remove = "features/debug/printk.scc"

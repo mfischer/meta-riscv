@@ -3,13 +3,24 @@
 #@SOC: Freedom U540
 #@DESCRIPTION: Machine configuration for the HiFive Unleashed development board
 
-include freedom-u540-common.inc
+require conf/machine/include/tune-riscv.inc
 
-RISCV_BBL_PAYLOAD ?= "${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin"
+MACHINE_FEATURES = "screen keyboard ext2 ext3 serial"
+MACHINE_ARCH = "riscv64"
 
-INITRAMFS_IMAGE_BUNDLE = "1"
-INITRAMFS_IMAGE = "riscv-initramfs-image"
-KERNEL_INITRAMFS = '-initramfs'
+KERNEL_IMAGETYPE = "vmlinux"
+
+PREFERRED_PROVIDER_virtual/kernel = "linux-riscv"
+PREFERRED_VERSION_linux-riscv = "4.15%"
+
+GDBVERSION = "riscv"
+QEMUVERSION = "riscv"
+
+EXTRA_IMAGEDEPENDS += "riscv-pk"
+
+SERIAL_CONSOLE = "115200 console"
+
+MACHINE_EXTRA_RRECOMMENDS += " kernel-modules"
 
 IMAGE_FSTYPES_append = " wic.gz"
 
